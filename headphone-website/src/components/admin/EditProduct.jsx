@@ -10,6 +10,7 @@ function EditProduct({ productId, onUpdated }) {
         category: "",
         stock: ""
     });
+    const [imageFile, setImageFile] = useState(null);
 
     useEffect(() => {
         const getProduct = async () => {
@@ -45,18 +46,23 @@ function EditProduct({ productId, onUpdated }) {
         e.preventDefault();
 
         try {
+            const formData = new FormData();
+
+            formData.append("title", product.title);
+            formData.append("price", Number(product.price));
+            formData.append("description", product.description);
+            formData.append("category", product.category);
+            formData.append("stock", Number(product.stock));
+
+            if (imageFile) {
+                formData.append("image", imageFile);
+            }
+
             const response = await fetch(
                 `https://headphone-hub.onrender.com/api/products/${productId}`,
                 {
                     method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        ...product,
-                        price: Number(product.price),
-                        stock: Number(product.stock)
-                    })
+                    body: formData
                 }
             );
 
@@ -70,13 +76,14 @@ function EditProduct({ productId, onUpdated }) {
                 if (onUpdated) {
                     onUpdated(data.product);
                 }
+            } else {
+                alert(data.message);
             }
 
         } catch (error) {
             console.log("Update error:", error);
         }
     };
-
 
     return (
         <div className="container py-5">
@@ -106,10 +113,10 @@ function EditProduct({ productId, onUpdated }) {
 
                 <input
                     className="form-control mb-3"
+                    type="file"
                     name="image"
-                    placeholder="Image path"
-                    value={product.image}
-                    onChange={handleChange}
+                    accept="image/*"
+                    onChange={(e) => setImageFile(e.target.files[0])}
                 />
 
                 <textarea
