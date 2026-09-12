@@ -129,6 +129,8 @@ export const updateProduct = async (req, res) => {
         });
 
     } catch (error) {
+        console.error("UPDATE PRODUCT ERROR:", error);
+
         res.status(500).json({
             success: false,
             message: error.message
