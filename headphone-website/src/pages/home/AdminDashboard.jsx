@@ -32,7 +32,7 @@ function AdminDashboard() {
         try {
 
             const response = await fetch(
-                "http://localhost:5000/api/products"
+                "https://headphone-hub.onrender.com/api/products"
             );
 
             const data = await response.json();
@@ -57,7 +57,7 @@ function AdminDashboard() {
 
         try {
             const response = await fetch(
-                "http://localhost:5000/api/orders/all",
+                "https://headphone-hub.onrender.com/api/orders/all",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -100,7 +100,7 @@ function AdminDashboard() {
 
         try {
             const response = await fetch(
-                `http://localhost:5000/api/orders/${orderId}/status`,
+                `https://headphone-hub.onrender.com/api/orders/${orderId}/status`,
                 {
                     method: "PUT",
                     headers: {
@@ -160,7 +160,7 @@ function AdminDashboard() {
                 formData.append("image", form.image);
             }
 
-            const url = "http://localhost:5000/api/products";
+            const url = "https://headphone-hub.onrender.com/api/products";
             const method = "POST";
 
             const response = await fetch(url, {
@@ -236,7 +236,7 @@ function AdminDashboard() {
         try {
 
             const response = await fetch(
-                `http://localhost:5000/api/products/${id}`,
+                `https://headphone-hub.onrender.com/api/products/${id}`,
                 {
                     method: "DELETE",
 

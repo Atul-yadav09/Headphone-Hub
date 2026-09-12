@@ -7,7 +7,7 @@ function AdminProducts() {
     const getProducts = async () => {
         try {
             const response = await fetch(
-                "http://localhost:5000/api/products"
+                "https://headphone-hub.onrender.com/api/products"
             );
 
             const data = await response.json();
@@ -35,7 +35,7 @@ function AdminProducts() {
         try {
 
             const response = await fetch(
-                `http://localhost:5000/api/products/${id}`,
+                `https://headphone-hub.onrender.com/api/products/${id}`,
                 {
                     method: "DELETE"
                 }

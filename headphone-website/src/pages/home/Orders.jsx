@@ -17,7 +17,7 @@ function Orders() {
             }
 
             const response = await fetch(
-                "http://localhost:5000/api/orders/my-orders",
+                "https://headphone-hub.onrender.com/api/orders/my-orders",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -56,7 +56,7 @@ function Orders() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                `http://localhost:5000/api/orders/${orderId}/cancel`,
+                `https://headphone-hub.onrender.com/api/orders/${orderId}/cancel`,
                 {
                     method: "PUT",
                     headers: {

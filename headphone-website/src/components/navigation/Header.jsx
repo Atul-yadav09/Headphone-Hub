@@ -49,7 +49,7 @@ function Header() {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/cart",
+          "https://headphone-hub.onrender.com/api/cart",
           {
             headers: {
               Authorization: `Bearer ${token}`

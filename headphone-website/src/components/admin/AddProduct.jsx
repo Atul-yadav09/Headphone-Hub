@@ -25,7 +25,7 @@ function AddProduct() {
 
         try {
             const response = await fetch(
-                "http://localhost:5000/api/products",
+                "https://headphone-hub.onrender.com/api/products",
                 {
                     method: "POST",
                     headers: {

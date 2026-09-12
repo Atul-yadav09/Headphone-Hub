@@ -15,7 +15,7 @@ function EditProduct({ productId, onUpdated }) {
         const getProduct = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:5000/api/products/${productId}`
+                    `https://headphone-hub.onrender.com/api/products/${productId}`
                 );
 
                 const data = await response.json();
@@ -46,7 +46,7 @@ function EditProduct({ productId, onUpdated }) {
 
         try {
             const response = await fetch(
-                `http://localhost:5000/api/products/${productId}`,
+                `https://headphone-hub.onrender.com/api/products/${productId}`,
                 {
                     method: "PUT",
                     headers: {

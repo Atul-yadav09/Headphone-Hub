@@ -27,7 +27,7 @@ function ProductCard({ product, index = 0 }) {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/cart/add",
+        "https://headphone-hub.onrender.com/api/cart/add",
         {
           method: "POST",
           headers: {
