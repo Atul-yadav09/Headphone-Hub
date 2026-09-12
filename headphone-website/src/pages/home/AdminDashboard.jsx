@@ -203,14 +203,14 @@ function AdminDashboard() {
         }
     }
     // EDIT
-   const handleEdit = (product) => {
-    setEditId(product._id);
+    const handleEdit = (product) => {
+        setEditId(product._id);
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-};
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    };
 
 
     // DELETE
@@ -414,8 +414,11 @@ function AdminDashboard() {
                                             </label>
                                             <input
                                                 type="text"
+                                                name="title"
                                                 className="form-control"
                                                 placeholder="Enter product name"
+                                                value={form.title}
+                                                onChange={handleChange}
                                             />
                                         </div>
 
@@ -425,9 +428,13 @@ function AdminDashboard() {
                                             </label>
                                             <input
                                                 type="number"
+                                                name="price"
                                                 className="form-control"
                                                 placeholder="Enter price"
+                                                value={form.price}
+                                                onChange={handleChange}
                                             />
+                                            
                                         </div>
 
                                         <div className="col-md-6">
@@ -544,9 +551,12 @@ function AdminDashboard() {
                             <div className="card h-100 p-3">
 
                                 <img
-                                    src={product.image}
+                                    src={
+                                        product.image?.startsWith("/uploads/")
+                                            ? `https://headphone-hub.onrender.com${product.image}`
+                                            : product.image
+                                    }
                                     alt={product.title}
-                                    className="img-fluid"
                                 />
 
                                 <h4 className="mt-3">
