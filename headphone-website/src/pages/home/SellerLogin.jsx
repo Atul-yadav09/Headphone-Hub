@@ -99,6 +99,13 @@ function SellerLogin() {
                         >
                             Login
                         </button>
+                        <button
+                            type="button"
+                            className="btn btn-link w-100 mt-3"
+                            onClick={() => navigate("/seller-register")}
+                        >
+                            New Seller? Register here
+                        </button>
 
                     </form>
 

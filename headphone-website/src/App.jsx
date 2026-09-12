@@ -1,7 +1,7 @@
 
 
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, } from "react-router-dom";
 import Cart from "./pages/home/Cart";
 import Home from "./pages/home/Home";
 import SellerLogin from "./pages/home/SellerLogin";
@@ -10,10 +10,11 @@ import Checkout from "./pages/home/Checkout";
 import Orders from "./pages/home/Orders";
 import Login from "./pages/home/Login";
 import Register from "./pages/home/Register";
+import SellerRegister from "./pages/home/SellerRegister";
 
 
 function ProtectedRoute({ children }) {
-
+   
     const token = localStorage.getItem("token");
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -35,7 +36,7 @@ function App() {
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                
+
 
                 <Route
                     path="/checkout"
@@ -45,6 +46,10 @@ function App() {
                 <Route
                     path="/"
                     element={<Home />}
+                />
+                <Route
+                    path="/seller-register"
+                    element={<SellerRegister />}
                 />
 
                 {/* Seller Login */}

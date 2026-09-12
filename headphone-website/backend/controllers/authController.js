@@ -46,6 +46,46 @@ export const registerUser = async (req, res) => {
     }
 };
 
+export const registerSeller = async (req, res) => {
+    try {
+        const { name, email, password } = req.body;
+
+        const existingSeller = await User.findOne({ email });
+
+        if (existingSeller) {
+            return res.status(400).json({
+                success: false,
+                message: "Seller already exists"
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const seller = await User.create({
+            name,
+            email,
+            password: hashedPassword,
+            role: "seller"
+        });
+
+        res.status(201).json({
+            success: true,
+            message: "Seller registration successful",
+            seller: {
+                id: seller._id,
+                name: seller.name,
+                email: seller.email,
+                role: seller.role
+            }
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
 
 // LOGIN
 export const loginUser = async (req, res) => {
