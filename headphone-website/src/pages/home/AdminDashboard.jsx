@@ -374,7 +374,7 @@ function AdminDashboard() {
                 />
             )}
             {/* PRODUCT FORM */}
-            {activeTab === "products" && !editId && (
+            {activeTab === "products" &&(
 
                 <div className="card ">
                     <h4>
