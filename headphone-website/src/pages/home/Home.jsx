@@ -1,7 +1,7 @@
 import React from 'react'
 import HeroSlider from "../../components/layout/hero/HeroSlider.jsx"
 import { categories, features, bannerDes, bannerDes1 } from '../../constants/data.js';
-import CategoryCard from '../../components/layout/card/categoryCard.jsx';
+import CategoryCard from '../../components/layout/card/CategoryCard.jsx';
 import Banner from '../../components/layout/banner/Banner.jsx';
 import ProductCard from '../../components/layout/card/ProductCard.jsx';
 import { useEffect, useState } from "react";
