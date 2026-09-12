@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import EditProduct from "../../components/admin/EditProduct";
+
 
 function AdminDashboard() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const [products, setProducts] = useState([]);
     const [orders, setOrders] = useState([]);
@@ -201,25 +203,14 @@ function AdminDashboard() {
         }
     }
     // EDIT
-    const handleEdit = (product) => {
+   const handleEdit = (product) => {
+    setEditId(product._id);
 
-        setEditId(product._id);
-
-        setForm({
-            title: product.title,
-            price: product.price,
-            image: product.image,
-            description: product.description,
-            category: product.category,
-            stock: product.stock
-        });
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    };
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+};
 
 
     // DELETE
@@ -373,8 +364,17 @@ function AdminDashboard() {
 
             </div>
 
+            {editId && (
+                <EditProduct
+                    productId={editId}
+                    onUpdated={(updatedProduct) => {
+                        setEditId(null);
+                        getProducts();
+                    }}
+                />
+            )}
             {/* PRODUCT FORM */}
-            {activeTab === "products" && (
+            {activeTab === "products" && !editId && (
 
                 <div className="card ">
                     <h4>
@@ -599,7 +599,7 @@ function AdminDashboard() {
             )}
 
             <hr className="my-5" />
-            
+
             <div>
 
                 <h4>

@@ -44,7 +44,10 @@ function EditProduct({ productId, onUpdated }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log("SUBMIT CLICKED");
+        console.log("Token:", localStorage.getItem("token"));
+        console.log("Product:", product);
+        console.log("Image:", imageFile);
         try {
             const formData = new FormData();
 
@@ -58,10 +61,15 @@ function EditProduct({ productId, onUpdated }) {
                 formData.append("image", imageFile);
             }
 
+            const token = localStorage.getItem("token");
+
             const response = await fetch(
                 `https://headphone-hub.onrender.com/api/products/${productId}`,
                 {
                     method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
                     body: formData
                 }
             );
