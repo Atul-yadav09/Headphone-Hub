@@ -434,7 +434,7 @@ function AdminDashboard() {
                                                 value={form.price}
                                                 onChange={handleChange}
                                             />
-                                            
+
                                         </div>
 
                                         <div className="col-md-6">
@@ -443,8 +443,11 @@ function AdminDashboard() {
                                             </label>
                                             <input
                                                 type="text"
+                                                name="category"
                                                 className="form-control"
                                                 placeholder="e.g. Headphones"
+                                                value={form.category}
+                                                onChange={handleChange}
                                             />
                                         </div>
 
@@ -454,8 +457,11 @@ function AdminDashboard() {
                                             </label>
                                             <input
                                                 type="number"
+                                                name="stock"
                                                 className="form-control"
                                                 placeholder="Enter stock"
+                                                value={form.stock}
+                                                onChange={handleChange}
                                             />
                                         </div>
 
@@ -464,9 +470,16 @@ function AdminDashboard() {
                                                 Product Image
                                             </label>
                                             <input
-                                                type="text"
+                                                type="file"
+                                                name="image"
                                                 className="form-control"
-                                                placeholder="/assets/products/1.jpg"
+                                                accept="image/*"
+                                                onChange={(e) =>
+                                                    setForm({
+                                                        ...form,
+                                                        image: e.target.files[0]
+                                                    })
+                                                }
                                             />
                                         </div>
 
