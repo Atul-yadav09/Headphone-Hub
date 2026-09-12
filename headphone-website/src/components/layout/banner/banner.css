@@ -1,0 +1,27 @@
+ .banner-section{
+    color: white;
+   
+}
+
+.banner-section .banner-wrapper img{
+    position: absolute;
+   
+}
+@media screen and (max-width:991px) {
+    .banner-section .banner-wrapper img{
+        height: 100%;
+        object-fit: cover;
+        top: auto;
+    }
+}
+@media screen and (max-width:767px) {
+    .banner-section .banner-wrapper img{
+        object-fit: contain;
+        top:-30%;
+        width: 76%;
+    }
+}
+ 
+
+
+ 

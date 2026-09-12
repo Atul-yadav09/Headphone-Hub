@@ -1,0 +1,174 @@
+/*Bootstrap css and icons from react-bootstrap*/
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
+
+/* google fonts (poppins) */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* custom variable */
+:root {
+  --color-primary: #f42c37;
+  --color-secondary: #cfcfcf;
+  --color-text: #000;
+  --color-accent: #e2e2e2;
+  --font-family: "Poppins", sans-serif;
+}
+
+/* Rest / sensible defaults from reset css in JoshwComeau*/
+
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+*:not(dialog) {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Increase line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+/* typography sizing  */
+
+h1 {
+  font-size: 48px;
+}
+
+h2 {
+  font-size: 36px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+h4 {
+  font-size: 18px;
+}
+
+h5 {
+  font-size: 17px;
+}
+
+h6 {
+  font-size: 16px;
+}
+
+p {
+  font-size: 14px;
+}
+
+small {
+  font-size: 12px;
+}
+
+
+/* layout responsive helper  */
+@media (max-width:1400px) {
+
+  .container {
+    max-width: 1430px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.btn-primary{
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-primary:hover{
+  background-color: #e0262b;
+  border-color: #e0262b;
+}
+
+@media (max-width:1200px) {
+
+  .container {
+
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.section-spacing {
+  padding: 50px 0px;
+}
+
+.banner-section{
+  padding-top: 120px;
+  padding-bottom: 100px;
+}
+.feature-section .feature-icon {
+  font-size: 42px;
+  color: var(--color-primary);
+}

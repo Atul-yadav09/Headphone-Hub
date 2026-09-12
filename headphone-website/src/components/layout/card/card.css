@@ -1,0 +1,66 @@
+.cat-card {
+    height: 350px;
+    position: relative;
+    border-radius: 1.5rem;
+    color: white;
+    overflow: hidden;
+}
+
+.cat-image {
+    width: 350px;
+    position: absolute;
+    bottom: 0;
+    right: -24px;
+    object-fit: contain;
+    transition: transform 280ms;
+    transform-origin: center;
+}
+
+.cat-card:hover .cat-image {
+    transform: translateY(-6px) scale(1.1) rotate(-1);
+}
+
+.cat-card:hover .btn-light {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.product-card {
+    background: transparent;
+    transition: transform 220ms, box-shadow 220ms;
+    padding: 12px;
+}
+
+.product-card:hover,
+.product-card:focus-within {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+outline: none;
+}
+.product-card .card-title{
+    font-size: 1.05rem;
+    margin: 0;
+    color: #111;
+    transition: color 220ms, transform 220ms;
+    margin-bottom: 10px;
+}
+
+.add-to-cart{
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 260ms, transform 260ms;
+}
+
+.product-card:hover .add-to-cart,
+.product-card:focus-within .add-to-cart{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.product-card:hover .card-title,
+.product-card:focus-within .card-title{
+
+    color: var(--color-primary);
+}

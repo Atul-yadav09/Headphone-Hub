@@ -1,0 +1,267 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+function Cart() {
+    const navigate = useNavigate();
+    const [cart, setCart] = useState({ items: [] });
+
+    const getCart = async () => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            alert("Please login first");
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                "http://localhost:5000/api/cart",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+                setCart(data.cart);
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.log("Cart error:", error);
+        }
+    };
+    useEffect(() => {
+        getCart();
+    }, []);
+
+    const updateQuantity = async (productId, quantity) => {
+        const token = localStorage.getItem("token");
+
+        if (quantity < 1) return;
+
+        try {
+            const response = await fetch(
+                `http://localhost:5000/api/cart/update/${productId}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        quantity: quantity
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+                setCart(data.cart);
+                window.dispatchEvent(new Event("cartUpdated"));
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const removeItem = async (productId) => {
+        const token = localStorage.getItem("token");
+
+        try {
+            const response = await fetch(
+                `http://localhost:5000/api/cart/remove/${productId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+                setCart(data.cart);
+                window.dispatchEvent(new Event("cartUpdated"));
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const totalAmount = cart.items.reduce(
+        (total, item) =>
+            total + item.product.price * item.quantity,
+        0
+    );
+    return (
+        <div
+            className="container-fluid py-5"
+            style={{
+                background: "#f8f9fa",
+                minHeight: "100vh"
+            }}
+        >
+            <div className="container">
+
+                {/* Heading */}
+                <div className="mb-4" onClick={getCart}>
+                    <h2 className="fw-bold mb-1">
+                        Shopping Cart 🛒
+                    </h2>
+
+                    <p className="text-muted">
+                        Review your items before checkout
+                    </p>
+                </div>
+
+                <div className="row g-4">
+
+                    {/* Cart Items */}
+                    <div className="col-lg-8">
+
+                        {cart.items.map((item) => (
+                            <div
+                                key={item.product._id}
+                                className="card border-0 shadow-sm rounded-4 mb-3"
+                            >
+                                <div className="card-body p-3">
+
+                                    <div className="row align-items-center">
+
+                                        {/* Image */}
+                                        <div className="col-3 col-md-2">
+                                            <img
+                                                src={item.product.image}
+                                                alt={item.product.title}
+                                                className="img-fluid rounded-3"
+                                                style={{
+                                                    height: "90px",
+                                                    width: "90px",
+                                                    objectFit: "contain"
+                                                }}
+                                            />
+                                        </div>
+
+                                        {/* Product Info */}
+                                        <div className="col-9 col-md-4">
+                                            <h5 className="fw-bold mb-1">
+                                                {item.product.title}
+                                            </h5>
+
+                                            <p className="text-muted mb-0">
+                                                ₹{item.product.price}
+                                            </p>
+                                        </div>
+
+                                        {/* Quantity */}
+                                        <div className="col-6 col-md-3 mt-3 mt-md-0">
+                                            <div className="d-flex align-items-center gap-2">
+
+                                                <button
+                                                    className="btn btn-outline-secondary btn-sm rounded-circle"
+                                                >
+                                                    −
+                                                </button>
+
+                                                <span className="fw-bold">
+                                                    {item.quantity}
+                                                </span>
+
+                                                <button
+                                                onClick={updateQuantity}
+                                                    className="btn btn-outline-secondary btn-sm rounded-circle"
+                                                >
+                                                    +
+                                                </button>
+
+                                            </div>
+                                        </div>
+
+                                        {/* Price + Remove */}
+                                        <div className="col-6 col-md-3 text-md-end mt-3 mt-md-0">
+
+                                            <h5 className="fw-bold">
+                                                ₹{item.product.price * item.quantity}
+                                            </h5>
+
+                                            <button
+                                            onClick={() => removeItem(item.product._id)}
+
+                                                className="btn btn-sm btn-outline-danger rounded-pill"
+                                            >
+                                                🗑 Remove
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        ))}
+
+                    </div>
+
+                    {/* Summary */}
+                    <div className="col-lg-4">
+
+                        <div className="card border-0 shadow-sm rounded-4">
+                            <div className="card-body p-4">
+
+                                <h4 className="fw-bold mb-4">
+                                    Order Summary
+                                </h4>
+
+                                <div className="d-flex justify-content-between mb-3">
+                                    <span>Subtotal</span>
+                                    <strong>₹{totalAmount}</strong>
+                                </div>
+
+                                <div className="d-flex justify-content-between mb-3">
+                                    <span>Delivery</span>
+                                    <span className="text-success">
+                                        FREE
+                                    </span>
+                                </div>
+
+                                <hr />
+
+                                <div className="d-flex justify-content-between mb-4">
+                                    <h5 className="fw-bold">
+                                        Total
+                                    </h5>
+
+                                    <h5 className="fw-bold text-primary">
+                                        ₹{totalAmount}
+                                    </h5>
+                                </div>
+
+                                <a
+                                    onClick={() => navigate("/checkout")}
+                                    role="button"
+                                    className="btn btn-primary w-100 rounded-pill py-2 fw-bold"
+                                >
+                                    Proceed to Checkout →
+                                </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Cart;

@@ -1,0 +1,82 @@
+                    index.html
+                         │
+                         ▼
+                     main.jsx
+                         │
+                         ▼
+                      App.jsx
+                         │
+          ┌──────────────┼──────────────┐
+          ▼              ▼              ▼
+       Header           Home          Footer
+                         │
+       ┌─────────────────┼─────────────────┐
+       ▼                 ▼                 ▼
+  HeroSlider          Categories        Features
+       │                 │
+       │                 └── CategoryCard
+       │
+       ▼
+   heroSlider
+   data.js
+
+                         │
+                         ▼
+                       Banner
+                         │
+                         ▼
+                     bannerDes
+
+                         │
+                         ▼
+                      Products
+                         │
+                         ▼
+                    ProductCard
+                         │
+                         ▼
+                      products
+                       data.js
+
+                         │
+                         ▼
+                       Banner
+                         │
+                         ▼
+                     bannerDes1
+
+
+
+                     BACKEND 
+
+
+                     backend/
+│
+├── config/
+│   └── db.js
+│
+├── models/
+│   ├── Product.js
+│   ├── Category.js
+│   ├── User.js
+│   └── Order.js
+│
+├── controllers/
+│   ├── productController.js
+│   ├── categoryController.js
+│   ├── authController.js
+│   └── orderController.js
+│
+├── routes/
+│   ├── productRoutes.js
+│   ├── categoryRoutes.js
+│   ├── authRoutes.js
+│   └── orderRoutes.js
+│
+├── middleware/
+│   ├── errorMiddleware.js
+│   └── authMiddleware.js
+│
+├── server.js
+├── .env
+└── package.json
