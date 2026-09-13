@@ -82,9 +82,16 @@ function AdminDashboard() {
 
 
     const getOrders = async () => {
-        const token = localStorage.getItem("token");
 
         try {
+
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                return;
+            }
+
+
             const response = await fetch(
                 "https://headphone-hub.onrender.com/api/orders/all",
                 {
@@ -94,33 +101,74 @@ function AdminDashboard() {
                 }
             );
 
+
             const data = await response.json();
 
-            if (data.success) {
-                setOrders(data.orders);
 
-                const uniqueCustomers = new Set(
-                    data.orders.map((order) => order.user?._id)
+            if (!data.success) {
+
+                console.log(
+                    "Orders error:",
+                    data.message
                 );
 
-                const totalSales = data.orders
-                    .filter((order) => order.status !== "cancelled")
-                    .reduce(
-                        (total, order) => total + order.totalAmount,
-                        0
-                    );
+                setOrders([]);
 
-                setStats((prev) => ({
+                setStats(prev => ({
                     ...prev,
-                    orders: data.orders.length,
-                    customers: uniqueCustomers.size,
-                    sales: totalSales
+                    orders: 0,
+                    customers: 0,
+                    sales: 0
                 }));
-            } else {
-                alert(data.message);
+
+                return;
             }
+
+
+            // Sirf logged-in seller ke orders
+            setOrders(data.orders);
+
+
+            // Unique customers
+            const uniqueCustomers = new Set(
+                data.orders
+                    .map(order => order.user?._id)
+                    .filter(Boolean)
+            );
+
+
+            // Seller ki sales
+            const totalSales = data.orders
+                .filter(
+                    order => order.status !== "cancelled"
+                )
+                .reduce(
+                    (total, order) =>
+                        total + Number(order.totalAmount || 0),
+                    0
+                );
+
+
+            setStats(prev => ({
+                ...prev,
+
+                orders: data.orders.length,
+
+                customers: uniqueCustomers.size,
+
+                sales: totalSales
+            }));
+
+
         } catch (error) {
-            console.log("Orders error:", error);
+
+            console.log(
+                "Orders error:",
+                error
+            );
+
+            setOrders([]);
+
         }
     };
 

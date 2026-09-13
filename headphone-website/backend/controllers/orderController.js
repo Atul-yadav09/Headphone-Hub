@@ -105,17 +105,95 @@ export const getMyOrders = async (req, res) => {
 
 export const getAllOrders = async (req, res) => {
     try {
-        const orders = await Order.find()
+
+        // 1. Logged-in seller ke products nikalo   
+
+        const sellerProducts = await Product.find({
+            seller: req.user.id
+        }).select("_id");
+
+        const sellerProductIds = sellerProducts.map(
+            product => product._id
+        );
+
+
+
+        // 2. Agar seller ke paas koi product nahi hai
+
+
+        if (sellerProductIds.length === 0) {
+
+            return res.status(200).json({
+                success: true,
+                orders: []
+            });
+        }
+        // 3. Sirf wahi orders nikalo
+        //    jisme seller ka product hai
+        const orders = await Order.find({
+            "items.product": {
+                $in: sellerProductIds
+            }
+        })
             .populate("user", "name email")
             .populate("items.product")
-            .sort({ createdAt: -1 });
+            .sort({
+                createdAt: -1
+            });
 
+
+        
+        // 4. Seller ke product IDs ka Set
+        
+
+        const sellerProductIdSet = new Set(
+            sellerProductIds.map(id => id.toString())
+        );
+        // 5. Har order me sirf seller ke items rakho
+        
+        const sellerOrders = orders.map(order => {
+
+            const orderObject = order.toObject();
+
+
+            orderObject.items = orderObject.items.filter(item => {
+
+                if (!item.product) {
+                    return false;
+                }
+
+                return sellerProductIdSet.has(
+                    item.product._id.toString()
+                );
+            });
+            // Seller ke products ka total
+            orderObject.totalAmount =
+                orderObject.items.reduce(
+                    (total, item) => {
+
+                        return total +
+                            (Number(item.price) *
+                                Number(item.quantity));
+
+                    },
+                    0
+                );
+            return orderObject;
+        });
+        // 6. Response
         res.status(200).json({
             success: true,
-            orders
+            orders: sellerOrders
         });
 
+
     } catch (error) {
+
+        console.log(
+            "GET SELLER ORDERS ERROR:",
+            error
+        );
+
         res.status(500).json({
             success: false,
             message: error.message
