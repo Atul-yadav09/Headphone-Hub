@@ -68,8 +68,15 @@ function ProductCard({ product, index = 0 }) {
       <div className='card product-card mb-4 border-0'>
         {/* product image */}
         <div className='card-img position-relative'>
-          <img src={product.image} alt={product.title}
-            className='img-fluid rounded-2 product-image' />
+          <img
+            src={
+              product.image?.startsWith("/uploads/")
+                ? `https://headphone-hub.onrender.com${product.image}`
+                : product.image
+            }
+            alt={product.title}
+            className='img-fluid rounded-2 product-image'
+          />
         </div>
         {/* product content */}
         <div className='card-des mt-3 mb-3'>
