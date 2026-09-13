@@ -172,15 +172,16 @@ function Orders() {
                             ))}
 
                             {/* TOTAL */}
-                            <div className="d-flex justify-content-between mt-3">
+                            <div className="d-flex justify-content-between mt-1">
                                 <h6>
                                     Delivery Charge
                                 </h6>
 
-                                <strong>
+                                <h6>
                                     ₹49
-                                </strong>
-                                <br />
+                                </h6>
+                                </div>
+                                <div className="d-flex justify-content-between mt-3">
                                 <strong>
                                     Total Amount
                                 </strong>
