@@ -43,6 +43,54 @@ header .navbar-toggler:focus {
 header .navbar-toggler-icon {
     filter: brightness(10);
 }
+/* Header actions ko hamesha right side rakho */
+header .navbar {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+header .navbar-brand {
+    margin-right: auto;
+    white-space: nowrap;
+}
+
+header .header-action {
+    margin-left: auto !important;
+    display: flex !important;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 10px;
+}
+
+/* User icon */
+header .header-action .btn0 {
+    border: none;
+    background: transparent;
+    color: white;
+    padding: 4px;
+}
+
+/* Mobile par bhi icons right me rahenge */
+@media (max-width: 991px) {
+
+    header .navbar {
+        flex-wrap: nowrap;
+    }
+
+    header .navbar-brand {
+        margin-right: auto;
+        font-size: 1.1rem;
+    }
+
+    header .header-action {
+        margin-left: auto !important;
+    }
+
+    header .navbar-toggler {
+        margin-right: 0 !important;
+    }
+}
 
 footer {
     padding-top: 60px;

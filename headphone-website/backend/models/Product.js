@@ -2,6 +2,12 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
     {
+         // Product kis seller ka hai
+        seller: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: false
+        },
         title: {
             type: String,
             required: true

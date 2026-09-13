@@ -7,6 +7,7 @@ import {
 import {
     createProduct,
     getProducts,
+    getSellerProducts,
     getProductById,
     updateProduct,
     deleteProduct

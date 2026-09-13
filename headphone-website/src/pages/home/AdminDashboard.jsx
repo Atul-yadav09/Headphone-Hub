@@ -33,21 +33,48 @@ function AdminDashboard() {
 
         try {
 
+            const token = localStorage.getItem("token");
+
             const response = await fetch(
-                "https://headphone-hub.onrender.com/api/products"
+                "https://headphone-hub.onrender.com/api/products/seller",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
             );
 
             const data = await response.json();
 
-            setProducts(data.products);
+            if (data.success) {
 
-            setStats((prev) => ({
-                ...prev,
-                products: data.products.length
-            }));
+                // Sirf logged-in seller ke products
+                setProducts(data.products);
+
+                setStats((prev) => ({
+                    ...prev,
+                    products: data.products.length
+                }));
+
+            } else {
+
+                console.log(data.message);
+
+                setProducts([]);
+
+                setStats((prev) => ({
+                    ...prev,
+                    products: 0
+                }));
+
+            }
 
         } catch (error) {
-            console.log(error);
+
+            console.log("GET SELLER PRODUCTS ERROR:", error);
+
+            setProducts([]);
+
         }
     };
 
@@ -145,7 +172,6 @@ function AdminDashboard() {
     // ADD / UPDATE
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
             const token = localStorage.getItem("token");
 
@@ -374,7 +400,7 @@ function AdminDashboard() {
                 />
             )}
             {/* PRODUCT FORM */}
-            {activeTab === "products" &&(
+            {activeTab === "products" && (
 
                 <div className="card ">
                     <h4>
