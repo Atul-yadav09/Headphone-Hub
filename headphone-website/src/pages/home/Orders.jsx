@@ -180,6 +180,7 @@ function Orders() {
                                 <strong>
                                     ₹49
                                 </strong>
+                                <br />
                                 <strong>
                                     Total Amount
                                 </strong>
