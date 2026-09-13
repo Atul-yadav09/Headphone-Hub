@@ -135,6 +135,10 @@ function Cart() {
             total + item.product.price * item.quantity,
         0
     );
+
+    const deliverCharge=()=>{
+        return 49;
+    }
     return (
         <div
             className="container-fluid py-5"
@@ -289,7 +293,7 @@ function Cart() {
                                 <div className="d-flex justify-content-between mb-3">
                                     <span>Delivery</span>
                                     <span className="text-success">
-                                        FREE
+                                        ₹{deliverCharge}
                                     </span>
                                 </div>
 
@@ -301,7 +305,7 @@ function Cart() {
                                     </h5>
 
                                     <h5 className="fw-bold text-primary">
-                                        ₹{totalAmount}
+                                        ₹{totalAmount + deliverCharge}
                                     </h5>
                                 </div>
 
