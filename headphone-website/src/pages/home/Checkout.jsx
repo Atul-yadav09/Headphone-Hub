@@ -97,11 +97,16 @@ function Checkout() {
         getCart();
     }, []);
 
-    const totalAmount = cart.items.reduce(
+    const DELIVERY_CHARGE = 49;
+
+    const subtotal = cart.items.reduce(
         (total, item) =>
             total + item.product.price * item.quantity,
         0
     );
+
+    const totalAmount = subtotal + DELIVERY_CHARGE;
+
 
     return (
         <div
@@ -317,7 +322,7 @@ function Checkout() {
                                     <span>Subtotal</span>
 
                                     <strong>
-                                        ₹{totalAmount}
+                                        ₹{subtotal}
                                     </strong>
                                 </div>
 
@@ -325,7 +330,7 @@ function Checkout() {
                                     <span>Delivery</span>
 
                                     <span className="text-success fw-semibold">
-                                        FREE
+                                        ₹{DELIVERY_CHARGE}
                                     </span>
                                 </div>
 
