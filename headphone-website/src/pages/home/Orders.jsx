@@ -89,13 +89,7 @@ function Orders() {
             </div>
         );
     }
-    const DELIVERY_CHARGE = 49;
-    const subtotal = cart.items.reduce(
-        (total, item) =>
-            total + item.price * item.quantity,
-        0
-    );
-    const totalAmount = subtotal + DELIVERY_CHARGE;
+
     return (
         <div className="container py-5">
 
@@ -139,14 +133,15 @@ function Orders() {
                                 </div>
 
                                 <span
-                                    className={`badge ${order.status === "cancelled"
+                                    className={`badge ${
+                                        order.status === "cancelled"
                                             ? "bg-danger"
                                             : order.status === "delivered"
-                                                ? "bg-success"
-                                                : order.status === "shipped"
-                                                    ? "bg-info"
-                                                    : "bg-warning text-dark"
-                                        }`}
+                                            ? "bg-success"
+                                            : order.status === "shipped"
+                                            ? "bg-info"
+                                            : "bg-warning text-dark"
+                                    }`}
                                 >
                                     {order.status}
                                 </span>
@@ -178,21 +173,19 @@ function Orders() {
 
                             {/* TOTAL */}
                             <div className="d-flex justify-content-between mt-3">
-                                <strong>
+                                <h6>
                                     Delivery Charge
-                                </strong>
+                                </h6>
 
                                 <strong>
-                                    ₹{DELIVERY_CHARGE}
+                                    ₹49
                                 </strong>
-                            </div>
-                            <div className="d-flex justify-content-between mt-3">
                                 <strong>
                                     Total Amount
                                 </strong>
 
                                 <strong>
-                                    ₹{totalAmount}
+                                    ₹{order.totalAmount + 49}
                                 </strong>
                             </div>
 
