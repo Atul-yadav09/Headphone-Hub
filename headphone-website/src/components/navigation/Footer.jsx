@@ -75,7 +75,7 @@ function Footer() {
               </p>
 
               <p className="text-muted mb-2">
-                📞 +91 98765 43210
+                📞 +91 98765 ⨯⨯⨯⨯⨯
               </p>
 
               <p className="text-muted mb-0">
