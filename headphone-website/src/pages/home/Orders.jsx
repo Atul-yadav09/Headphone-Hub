@@ -92,7 +92,7 @@ function Orders() {
     const DELIVERY_CHARGE = 49;
     const subtotal = cart.items.reduce(
         (total, item) =>
-            total + item.product.price * item.quantity,
+            total + item.price * item.quantity,
         0
     );
     const totalAmount = subtotal + DELIVERY_CHARGE;
