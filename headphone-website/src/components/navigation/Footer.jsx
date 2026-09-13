@@ -90,6 +90,9 @@ function Footer() {
           <div className="text-center text-muted">
             © 2026 Headphone Hub. All rights reserved.
           </div>
+          <p className="text-center text-muted">
+            Created by-Atul kumar
+          </p>
 
         </div>
       </footer>

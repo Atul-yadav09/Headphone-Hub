@@ -130,15 +130,16 @@ function Cart() {
             console.log(error);
         }
     };
-    const totalAmount = cart.items.reduce(
+    const DELIVERY_CHARGE = 49;
+
+    const subtotal = cart.items.reduce(
         (total, item) =>
             total + item.product.price * item.quantity,
         0
     );
 
-    const deliverCharge=()=>{
-        return 49;
-    }
+    const totalAmount = subtotal + DELIVERY_CHARGE;
+
     return (
         <div
             className="container-fluid py-5"
@@ -287,13 +288,13 @@ function Cart() {
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <span>Subtotal</span>
-                                    <strong>₹{totalAmount}</strong>
+                                    <strong>₹{subtotal}</strong>
                                 </div>
 
                                 <div className="d-flex justify-content-between mb-3">
                                     <span>Delivery</span>
                                     <span className="text-success">
-                                        ₹{deliverCharge}
+                                        ₹{DELIVERY_CHARGE}
                                     </span>
                                 </div>
 
@@ -305,7 +306,7 @@ function Cart() {
                                     </h5>
 
                                     <h5 className="fw-bold text-primary">
-                                        ₹{totalAmount + deliverCharge}
+                                        ₹{totalAmount}
                                     </h5>
                                 </div>
 
