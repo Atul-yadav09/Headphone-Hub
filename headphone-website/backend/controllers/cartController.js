@@ -61,12 +61,16 @@ export const addToCart = async (req, res) => {
 
 
 export const getCart = async (req, res) => {
+
     try {
+
         const cart = await Cart.findOne({
             user: req.user.id
         }).populate("items.product");
 
+
         if (!cart) {
+
             return res.status(200).json({
                 success: true,
                 message: "Cart is empty",
@@ -76,12 +80,20 @@ export const getCart = async (req, res) => {
             });
         }
 
+
         res.status(200).json({
             success: true,
             cart
         });
 
+
     } catch (error) {
+
+        console.log(
+            "GET CART ERROR:",
+            error
+        );
+
         res.status(500).json({
             success: false,
             message: error.message
@@ -124,8 +136,6 @@ export const removeFromCart = async (req, res) => {
     }
 };
 
-
-
 export const updateCartQuantity = async (req, res) => {
     try {
         const { productId } = req.params;
@@ -153,10 +163,20 @@ export const updateCartQuantity = async (req, res) => {
             });
         }
 
-        item.quantity = quantity;
+        const newQuantity = Number(quantity);
+
+        if (!Number.isInteger(newQuantity) || newQuantity < 1) {
+            return res.status(400).json({
+                success: false,
+                message: "Quantity must be at least 1"
+            });
+        }
+
+        item.quantity = newQuantity;
 
         await cart.save();
 
+        await cart.populate("items.product");
         res.status(200).json({
             success: true,
             message: "Cart quantity updated",

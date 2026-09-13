@@ -39,35 +39,68 @@ function Cart() {
     }, []);
 
     const updateQuantity = async (productId, quantity) => {
+
         const token = localStorage.getItem("token");
 
-        if (quantity < 1) return;
+        if (!token) {
+            alert("Please login first");
+            return;
+        }
+
+        if (quantity < 1) {
+            return;
+        }
 
         try {
+
             const response = await fetch(
                 `https://headphone-hub.onrender.com/api/cart/update/${productId}`,
                 {
                     method: "PUT",
+
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`
                     },
+
                     body: JSON.stringify({
-                        quantity: quantity
+                        quantity: Number(quantity)
                     })
                 }
             );
 
+
             const data = await response.json();
 
+
             if (data.success) {
+
+                // Updated cart immediately show karo
                 setCart(data.cart);
-                window.dispatchEvent(new Event("cartUpdated"));
+
+                // Header/cart count ko update karne ke liye
+                window.dispatchEvent(
+                    new Event("cartUpdated")
+                );
+
             } else {
-                alert(data.message);
+
+                alert(
+                    data.message ||
+                    "Unable to update cart"
+                );
             }
+
         } catch (error) {
-            console.log(error);
+
+            console.log(
+                "Update quantity error:",
+                error
+            );
+
+            alert(
+                "Unable to update cart quantity"
+            );
         }
     };
 
@@ -140,13 +173,20 @@ function Cart() {
                                         {/* Image */}
                                         <div className="col-3 col-md-2">
                                             <img
-                                                src={item.product.image}
+                                                src={
+                                                    item.product.image?.startsWith("/uploads/")
+                                                        ? `https://headphone-hub.onrender.com${item.product.image}`
+                                                        : item.product.image
+                                                }
                                                 alt={item.product.title}
                                                 className="img-fluid rounded-3"
                                                 style={{
                                                     height: "90px",
                                                     width: "90px",
                                                     objectFit: "contain"
+                                                }}
+                                                onError={(e) => {
+                                                    e.currentTarget.style.display = "none";
                                                 }}
                                             />
                                         </div>
@@ -167,17 +207,37 @@ function Cart() {
                                             <div className="d-flex align-items-center gap-2">
 
                                                 <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        updateQuantity(
+                                                            item.product._id,
+                                                            item.quantity - 1
+                                                        )
+                                                    }
+                                                    disabled={item.quantity <= 1}
                                                     className="btn btn-outline-secondary btn-sm rounded-circle"
                                                 >
                                                     −
                                                 </button>
 
-                                                <span className="fw-bold">
+                                                <span
+                                                    className="fw-bold"
+                                                    style={{
+                                                        minWidth: "30px",
+                                                        textAlign: "center"
+                                                    }}
+                                                >
                                                     {item.quantity}
                                                 </span>
 
                                                 <button
-                                                onClick={updateQuantity}
+                                                    type="button"
+                                                    onClick={() =>
+                                                        updateQuantity(
+                                                            item.product._id,
+                                                            item.quantity + 1
+                                                        )
+                                                    }
                                                     className="btn btn-outline-secondary btn-sm rounded-circle"
                                                 >
                                                     +
@@ -194,7 +254,7 @@ function Cart() {
                                             </h5>
 
                                             <button
-                                            onClick={() => removeItem(item.product._id)}
+                                                onClick={() => removeItem(item.product._id)}
 
                                                 className="btn btn-sm btn-outline-danger rounded-pill"
                                             >
